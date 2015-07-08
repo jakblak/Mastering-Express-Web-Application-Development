@@ -11,13 +11,17 @@ ig.use({
 var pop_cache = {};
 
 function get_most_popular(cb) {
-  if(pop_cache.media) {
+
+  var timeout = 10;
+
+  if(pop_cache.media && (new Date).getTime() < pop_cache.timeout) {
     return cb(null, pop_cache.media, pop_cache.limit);
   }
   ig.media_popular(function(err, media, limit) {
     pop_cache = {
       media: media,
-      limit: limit
+      limit: limit,
+      timeout: (+(new Date())) + (timeout * 1000)
     }
     return cb(err, media, limit);
   });
@@ -35,7 +39,6 @@ router.get('/', function(req, res, next) {
       }
       res.render('popular', {
         urls: urls
-        console.log(urls);
       });
     });
 });
