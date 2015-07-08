@@ -6,17 +6,24 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nconf = require('nconf');
 var winston = require('winston');
+var nunjucks = require('nunjucks');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
+nunjucks.configure('views', {
+    autoescape: true,
+    express: app
+})
+
 winston.add(winston.transports.File, {
   filename: 'error.log',
   level: 'error'
 });
-winston.error('Something went wrong');
+// winston.error('Something went wrong');
+winston.profile
 
 nconf.defaults({
   "http": {
@@ -28,7 +35,7 @@ winston.info('Initialised nconf');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
