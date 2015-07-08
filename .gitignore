@@ -7,3 +7,4 @@ vendor/
 tmp
 .idea
 secret.js
+error.log

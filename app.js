@@ -7,22 +7,10 @@ var bodyParser = require('body-parser');
 var nconf = require('nconf');
 var winston = require('winston');
 var nunjucks = require('nunjucks');
-var secrets = require('./secrets');
-
-var ig = require('instagram-node').instagram();
-ig.use({
-    client_id: secrets.ID,
-    client_secret: secrets.secret
-});
-
-ig.media_popular(function(err, media, limit) {
-    if(err) {
-        throw err; }
-    console.log(media);
-});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var popular = require('./routes/popular');
 
 var app = express();
 
@@ -62,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/popular', popular);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
