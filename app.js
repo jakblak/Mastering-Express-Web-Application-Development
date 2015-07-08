@@ -7,6 +7,19 @@ var bodyParser = require('body-parser');
 var nconf = require('nconf');
 var winston = require('winston');
 var nunjucks = require('nunjucks');
+var secrets = require('./secrets');
+
+var ig = require('instagram-node').instagram();
+ig.use({
+    client_id: secrets.ID,
+    client_secret: secrets.secret
+});
+
+ig.media_popular(function(err, media, limit) {
+    if(err) {
+        throw err; }
+    console.log(media);
+});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
