@@ -5,3 +5,7 @@
 - use Nunjucks and remove Jade
 
 - npm install instagram-node
+- display popular images on page
+- implement memory cache
+- make items expire automatically
+- To persist across restarts use: MemCahed or Redis
